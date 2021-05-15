@@ -1,5 +1,7 @@
 # HexletCode
 
+![lint](https://github.com/Konstantin6487/-ruby-github-actions/actions/workflows/linter-check.yml/badge.svg?branch=main) ![test](https://github.com/Konstantin6487/-ruby-github-actions/actions/workflows/testing-check.yml/badge.svg?branch=main)
+
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hexlet_code`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 TODO: Delete this and the text above, and describe your gem
