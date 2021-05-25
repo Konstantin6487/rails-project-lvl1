@@ -24,8 +24,13 @@ def render(parsed)
   end
 end
 
+# main Module
 module HexletCode
   class Error < StandardError; end
+
+  def self.form_for(*)
+    '<form action="#" method="post"></form>'
+  end
 
   # Tag builder
   class Tag
