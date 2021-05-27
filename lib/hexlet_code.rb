@@ -26,10 +26,38 @@ end
 
 # main Module
 module HexletCode
+  @stringified_tags = []
   class Error < StandardError; end
 
-  def self.form_for(*)
-    '<form action="#" method="post"></form>'
+  def self.add_methods(hash)
+    hash.define_singleton_method(:stringified_tags) do
+      HexletCode.instance_variable_get(:@stringified_tags)
+    end
+
+    hash.define_singleton_method(:stringified_tags_push) do |value|
+      tags = HexletCode.instance_variable_get(:@stringified_tags)
+      tags.push(value)
+    end
+
+    hash.define_singleton_method(:stringified_tags_clear) do
+      HexletCode.instance_variable_set(:@stringified_tags, [])
+    end
+  end
+
+  def self.form_for(user)
+    HexletCode.add_methods(user)
+
+    def user.input(*attrs, **options)
+      tag_name = options.fetch(:as, 'input')
+      value = HexletCode::Tag.build(tag_name, to_h.select { |attr| attrs.include? attr })
+      stringified_tags_push(value)
+    end
+
+    block_given? && (yield user)
+
+    generated_form = "<form action=\"#\" method=\"post\">#{user.stringified_tags.join}</form>"
+    user.stringified_tags_clear
+    generated_form
   end
 
   # Tag builder

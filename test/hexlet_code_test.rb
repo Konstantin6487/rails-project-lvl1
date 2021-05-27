@@ -7,17 +7,23 @@ class HexletCodeTest < Minitest::Test
     refute_nil ::HexletCode::VERSION
   end
 
-  def setup
-    @builder = HexletCode::Tag
+  def test_withoud_tags
+    user = Struct.new(:name, :job, keyword_init: true)
+    init_user = user.new name: 'rob', job: 'hexlet'
+    actual = HexletCode.form_for init_user do |f|
+    end
+    expected = '<form action="#" method="post"></form>'
+    assert_equal(expected, actual)
   end
 
-  def test_single_tag_build
-    assert_equal('<br>', @builder.build('br'))
-    assert_equal('<input type="submit" value="Save">', @builder.build('input', type: 'submit', value: 'Save'))
-  end
-
-  def test_paired_tag_build
-    assert_equal('<label>Email</label>', @builder.build('label') { 'Email' })
-    assert_equal('<label for="email">Email</label>', @builder.build('label', for: 'email') { 'Email' })
+  def test_added_tags
+    user = Struct.new(:name, :job, keyword_init: true)
+    init_user = user.new name: 'rob', job: 'hexlet'
+    actual = HexletCode.form_for init_user do |f|
+      f.input :name
+      f.input :job, as: :textarea
+    end
+    expected = '<form action="#" method="post"><input name="rob"><textarea job="hexlet"></textarea></form>'
+    assert_equal(expected, actual)
   end
 end
