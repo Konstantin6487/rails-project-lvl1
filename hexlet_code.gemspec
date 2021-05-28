@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   # Specify which files should be added to the gem when it is released.
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split('\x0').reject { |f| f.match(%r{\A(?:test|spec|features)/}) }
+    `git ls-files`.split('\x0').reject { |f| f.match(%r{\A(?:test|spec|features)/}) }
   end
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
