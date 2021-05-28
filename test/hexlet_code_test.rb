@@ -48,10 +48,10 @@ class HexletCodeTest < Minitest::Test
     actual = HexletCode.form_for init_user do |f|
       f.input :name
       f.input :job
-      f.submit 'Some'
+      f.submit 'Add'
     end
     expected = '<form action="#" method="post"><input name="rob">'\
-    '<input job="hexlet"><input type="submit" value="Some">'\
+    '<input job="hexlet"><input type="submit" value="Add">'\
     '</form>'
     assert_equal(expected, actual)
   end
