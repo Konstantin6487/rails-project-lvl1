@@ -18,11 +18,11 @@ class HexletCodeTest < Minitest::Test
   def test_tags
     user = Struct.new(:name, :job, keyword_init: true)
     init_user = user.new name: 'rob', job: 'hexlet'
-    actual = HexletCode.form_for init_user do |f|
+    actual = HexletCode.form_for init_user, url: '/me' do |f|
       f.input :name
-      f.input :job, as: :textarea
+      f.input :job, as: :text
     end
-    expected = '<form action="#" method="post">'\
+    expected = '<form action="/me" method="post">'\
     '<input name="rob"><textarea job="hexlet"></textarea>'\
     '</form>'
     assert_equal(expected, actual)

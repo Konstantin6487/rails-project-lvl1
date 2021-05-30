@@ -24,23 +24,32 @@ module HexletCode
     end
 
     hash.define_singleton_method(:input) do |*attrs, **options|
-      tag_name = options.fetch(:as, 'input')
-      value = HexletCode::Tag.build(tag_name, to_h.select { |attr| attrs.include? attr })
+      mapping = {
+        text: 'textarea',
+        input: 'input'
+      }
+      tag_type = options.fetch(:as, :input)
+      tag_name = mapping[tag_type]
+      tag_options = to_h
+                    .select { |attr| attrs.include? attr }
+                    .merge(options)
+                    .reject { |key| key.eql?(:as) }
+      value = HexletCode::Tag.build(tag_name, tag_options)
       stringified_tags_push(value)
     end
 
     hash.define_singleton_method(:submit) do |label = 'Save'|
-      tag_name = 'input'
-      attrs = { type: 'submit', value: label }
-      value = HexletCode::Tag.build(tag_name, attrs)
+      tag_type = 'input'
+      tag_options = { type: 'submit', value: label }
+      value = HexletCode::Tag.build(tag_type, tag_options)
       stringified_tags_push(value)
     end
   end
 
-  def self.form_for(user)
+  def self.form_for(user, url: '#')
     HexletCode.add_methods(user)
     block_given? && (yield user)
-    generated_form = "<form action=\"#\" method=\"post\">#{user.stringified_tags.join}</form>"
+    generated_form = "<form action=\"#{url}\" method=\"post\">#{user.stringified_tags.join}</form>"
     user.stringified_tags_clear
     generated_form
   end
