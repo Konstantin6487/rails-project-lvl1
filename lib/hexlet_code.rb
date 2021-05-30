@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'hexlet_code/version'
-require_relative './parser'
+require_relative './parsers'
 require_relative './render'
 
 # main Module
