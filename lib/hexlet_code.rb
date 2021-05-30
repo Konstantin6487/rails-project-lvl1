@@ -36,7 +36,7 @@ module HexletCode
                     .reject { |key| key.eql?(:as) }
       label = {
         tag_name: 'label',
-        tag_options: { for: tag_options.fetch(:name, '') },
+        tag_options: { for: 'name' },
         tag_body: tag_options[:name]
       }
       input = { tag_name: tag_name, tag_options: tag_options }

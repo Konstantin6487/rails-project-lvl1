@@ -23,9 +23,9 @@ class HexletCodeTest < Minitest::Test
       f.input :job, as: :text
     end
     expected = '<form action="/me" method="post">'\
-    '<label for="rob">Rob</label>'\
+    '<label for="name">Rob</label>'\
     '<input name="rob">'\
-    '<label for=""></label>'\
+    '<label for="name"></label>'\
     '<textarea job="hexlet"></textarea>'\
     '</form>'
     assert_equal(expected, actual)
@@ -40,9 +40,9 @@ class HexletCodeTest < Minitest::Test
       f.submit
     end
     expected = '<form action="#" method="post">'\
-    '<label for="rob">Rob</label>'\
+    '<label for="name">Rob</label>'\
     '<input name="rob">'\
-    '<label for=""></label>'\
+    '<label for="name"></label>'\
     '<input job="hexlet">'\
     '<input type="submit" value="Save">'\
     '</form>'
@@ -58,9 +58,9 @@ class HexletCodeTest < Minitest::Test
       f.submit 'Add'
     end
     expected = '<form action="#" method="post">'\
-    '<label for="rob">Rob</label>'\
+    '<label for="name">Rob</label>'\
     '<input name="rob">'\
-    '<label for=""></label>'\
+    '<label for="name"></label>'\
     '<input job="hexlet">'\
     '<input type="submit" value="Add">'\
     '</form>'
