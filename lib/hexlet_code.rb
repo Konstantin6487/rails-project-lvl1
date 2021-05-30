@@ -30,16 +30,21 @@ module HexletCode
       }
       tag_type = options.fetch(:as, :input)
       tag_name = mapping[tag_type]
+      default_tag_options = tag_name.eql?('input') ? { type: 'text' } : {}
       tag_options = to_h
                     .select { |attr| attrs.include? attr }
                     .merge(options)
                     .reject { |key| key.eql?(:as) }
+      input = {
+        tag_name: tag_name,
+        tag_options: default_tag_options.merge(tag_options)
+      }
+
       label = {
         tag_name: 'label',
         tag_options: { for: 'name' },
         tag_body: tag_options[:name]
       }
-      input = { tag_name: tag_name, tag_options: tag_options }
       tags_data_push(label)
       tags_data_push(input)
     end
