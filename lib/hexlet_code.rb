@@ -34,9 +34,13 @@ module HexletCode
                     .select { |attr| attrs.include? attr }
                     .merge(options)
                     .reject { |key| key.eql?(:as) }
-      # label = { tag_name: 'label', tag_options: { for: tag_options.fetch(:name, '') } }
+      label = {
+        tag_name: 'label',
+        tag_options: { for: tag_options.fetch(:name, '') },
+        tag_body: tag_options[:name]
+      }
       input = { tag_name: tag_name, tag_options: tag_options }
-      # tags_data_push(label)
+      tags_data_push(label)
       tags_data_push(input)
     end
 
@@ -52,7 +56,7 @@ module HexletCode
     HexletCode.add_methods(user)
     block_given? && (yield user)
     stringified_fields = user.tags_data
-                             .map { |tag| HexletCode::Tag.build(tag[:tag_name], tag[:tag_options]) }
+                             .map { |tag| HexletCode::Tag.build(tag[:tag_name], tag[:tag_options], tag[:tag_body]) }
                              .join
     generated_form = "<form action=\"#{url}\" method=\"post\">#{stringified_fields}</form>"
     user.tags_data_clear
@@ -61,8 +65,8 @@ module HexletCode
 
   # Tag builder
   class Tag
-    def self.build(*tag, &block)
-      parsed = parse(tag, &block)
+    def self.build(*tag_data)
+      parsed = parse(tag_data)
       render parsed
     end
   end
