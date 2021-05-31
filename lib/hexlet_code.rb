@@ -41,7 +41,7 @@ module HexletCode
 
       label = {
         tag_name: 'label',
-        tag_options: { for: 'name' },
+        tag_options: { for: attr },
         tag_body: tag_options[:name]
       }
       tags_data_push(label)
