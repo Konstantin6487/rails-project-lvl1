@@ -9,10 +9,10 @@ def render(parsed)
   built_attrs = build_attrs.call(attrs)
   built_body = body&.capitalize
   if single_tags_list.include?(tag_name)
-    p "<#{tag_name}#{built_attrs}>"
+    print "<#{tag_name}#{built_attrs}>"
     "<#{tag_name}#{built_attrs}>"
   else
-    p "<#{tag_name}#{built_attrs}>#{built_body}</#{tag_name}>"
+    print "<#{tag_name}#{built_attrs}>#{built_body}</#{tag_name}>"
     "<#{tag_name}#{built_attrs}>#{built_body}</#{tag_name}>"
   end
 end
