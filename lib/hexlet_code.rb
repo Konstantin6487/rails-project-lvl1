@@ -65,7 +65,6 @@ module HexletCode
                              .join
     generated_form = "<form action=\"#{url}\" method=\"post\">#{stringified_fields}</form>"
     user.tags_data_clear
-    print generated_form
     generated_form
   end
 
