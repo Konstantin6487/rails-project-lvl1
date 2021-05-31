@@ -23,10 +23,10 @@ class HexletCodeTest < Minitest::Test
       f.input :job, as: :text
     end
     expected = '<form action="/me" method="post">'\
-    '<label for="name">Rob</label>'\
-    '<input type="text" name="rob">'\
-    '<label for="name"></label>'\
-    '<textarea job="hexlet"></textarea>'\
+    '<label for="name">Name</label>'\
+    '<input type="text" name="name" value="rob">'\
+    '<label for="name">Job</label>'\
+    '<textarea name="job" value="hexlet"></textarea>'\
     '</form>'
     assert_equal(expected, actual)
   end
@@ -40,10 +40,10 @@ class HexletCodeTest < Minitest::Test
       f.submit
     end
     expected = '<form action="#" method="post">'\
-    '<label for="name">Rob</label>'\
-    '<input type="text" name="rob">'\
-    '<label for="name"></label>'\
-    '<input type="text" job="hexlet">'\
+    '<label for="name">Name</label>'\
+    '<input type="text" name="name" value="rob">'\
+    '<label for="name">Job</label>'\
+    '<input type="text" name="job" value="hexlet">'\
     '<input type="submit" value="Save">'\
     '</form>'
     assert_equal(expected, actual)
@@ -58,10 +58,10 @@ class HexletCodeTest < Minitest::Test
       f.submit 'Add'
     end
     expected = '<form action="#" method="post">'\
-    '<label for="name">Rob</label>'\
-    '<input type="text" name="rob">'\
-    '<label for="name"></label>'\
-    '<input type="text" job="hexlet">'\
+    '<label for="name">Name</label>'\
+    '<input type="text" name="name" value="rob">'\
+    '<label for="name">Job</label>'\
+    '<input type="text" name="job" value="hexlet">'\
     '<input type="submit" value="Add">'\
     '</form>'
     assert_equal(expected, actual)

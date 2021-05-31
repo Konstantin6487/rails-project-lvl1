@@ -23,7 +23,7 @@ module HexletCode
       HexletCode.instance_variable_set(:@tags_data, [])
     end
 
-    hash.define_singleton_method(:input) do |*attrs, **options|
+    hash.define_singleton_method(:input) do |attr, **options|
       mapping = {
         text: 'textarea',
         input: 'input'
@@ -31,8 +31,7 @@ module HexletCode
       tag_type = options.fetch(:as, :input)
       tag_name = mapping[tag_type]
       default_tag_options = tag_name.eql?('input') ? { type: 'text' } : {}
-      tag_options = to_h
-                    .select { |attr| attrs.include? attr }
+      tag_options = { name: attr, value: hash[attr] }
                     .merge(options)
                     .reject { |key| key.eql?(:as) }
       input = {
