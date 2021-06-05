@@ -2,7 +2,8 @@
 
 ![lint](https://github.com/Konstantin6487/rails-project-lvl1/actions/workflows/linter-check.yml/badge.svg) ![test](https://github.com/Konstantin6487/rails-project-lvl1/actions/workflows/testing-check.yml/badge.svg)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hexlet_code`. To experiment with that code, run `bin/console` for an interactive prompt.
+
+Simple form generator
 
 ## Installation
 
@@ -22,7 +23,24 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+User = Struct.new(:name, :job, keyword_init: true)
+user = User.new job: 'hexlet'
+
+HexletCode.form_for user do |f|
+  f.input :name
+  f.input :job
+  f.submit
+end
+
+# <form action="#" method="post">
+#   <label for="name">Name</label>
+#   <input type="text" name="name">
+#   <label for="job">Job</label>
+#   <input type="text" name="job" value="hexlet">
+#   <input type="submit" value="Save" name="commit">
+# </form>
+```
 
 ## Development
 
@@ -37,7 +55,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/Konsta
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the HexletCode project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/Konstantin6487/rails-project-lvl1/blob/main/CODE_OF_CONDUCT.md).
