@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-def parse(raw)
-  tag_name, attrs, body = raw
+def parse(tag_name, attrs)
   {
     tag_name: tag_name,
-    attrs: attrs || {},
-    body: body
+    attrs: attrs,
+    body: block_given? ? yield : ''
   }
 end

@@ -6,7 +6,7 @@ def render(parsed)
   build_attrs = lambda { |attrs_hash|
     attrs_hash.keys.map { |attr| " #{attr}=\"#{attrs_hash[attr]}\"" }.join
   }
-  built_attrs = build_attrs.call(attrs)
+  built_attrs = attrs.empty? ? '' : build_attrs.call(attrs)
   built_body = body&.capitalize
   if single_tags_list.include?(tag_name)
     "<#{tag_name}#{built_attrs}>"
