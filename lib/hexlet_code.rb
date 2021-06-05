@@ -9,14 +9,16 @@ module HexletCode
   autoload :Tag, 'hexlet_code/tag'
   autoload :Form, 'hexlet_code/form'
 
+  class Error < StandardError; end
+
   def self.fold_form(inner, url)
     "<form action=\"#{url}\" method=\"post\">#{inner}</form>"
   end
 
   def self.form_for(form_data, url: '#')
-    tags = Form.new(form_data)
-    block_given? && yield(tags)
-    fold_form(tags, url)
+    container = Form.new(form_data)
+    block_given? && yield(container)
+    fold_form(container, url)
   end
 
   private_class_method :fold_form
