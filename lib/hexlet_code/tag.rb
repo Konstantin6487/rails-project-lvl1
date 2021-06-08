@@ -4,11 +4,8 @@ module HexletCode
   # Tag builder
   class Tag
     def self.build(tag_name, tag_options = {}, &block)
-      parser = Parsers.new
-      tag_render = Render.new
-
-      parsed = parser.parse(tag_name, tag_options, &block)
-      tag_render.render(parsed)
+      tag_render = TagRenderer.new
+      tag_render.render tag_name, tag_options, &block
     end
   end
 end
