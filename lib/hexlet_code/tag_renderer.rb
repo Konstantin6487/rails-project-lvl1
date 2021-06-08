@@ -10,7 +10,7 @@ module HexletCode
       }
       stringified_attrs = tag_options.empty? ? '' : build_attrs.call(tag_options)
       body = block_given? ? yield : ''
-      stringified_body = body.capitalize
+      stringified_body = tag_name == 'label' ? body.capitalize : body
       if single_tags_list.include? tag_name
         "<#{tag_name}#{stringified_attrs}>"
       else
