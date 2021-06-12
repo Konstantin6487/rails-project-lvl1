@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'rails/dom/testing/assertions/dom_assertions'
 
 class HexletCodeTest < Minitest::Test
+  include Rails::Dom::Testing::Assertions::DomAssertions
+
   def test_that_it_has_a_version_number
     refute_nil ::HexletCode::VERSION
   end
@@ -12,7 +15,7 @@ class HexletCodeTest < Minitest::Test
     init_user = user.new name: 'rob', job: 'hexlet'
     actual = HexletCode.form_for init_user
     expected = '<form action="#" method="post"></form>'
-    assert_equal(expected, actual)
+    assert_dom_equal expected, actual
   end
 
   def test_tags
@@ -28,7 +31,7 @@ class HexletCodeTest < Minitest::Test
     '<label for="job">Job</label>'\
     '<textarea name="job" value="hexlet"></textarea>'\
     '</form>'
-    assert_equal(expected, actual)
+    assert_dom_equal expected, actual
   end
 
   def test_tags_with_email
@@ -44,7 +47,7 @@ class HexletCodeTest < Minitest::Test
     '<label for="job">Job</label>'\
     '<textarea name="job" value="hexlet"></textarea>'\
     '</form>'
-    assert_equal(expected, actual)
+    assert_dom_equal expected, actual
   end
 
   def test_tags_with_submit
@@ -62,7 +65,7 @@ class HexletCodeTest < Minitest::Test
     '<input type="text" name="job" value="hexlet">'\
     '<input type="submit" value="Save">'\
     '</form>'
-    assert_equal(expected, actual)
+    assert_dom_equal expected, actual
   end
 
   def test_tags_with_submit_label
@@ -80,6 +83,6 @@ class HexletCodeTest < Minitest::Test
     '<input type="text" name="job" value="hexlet">'\
     '<input type="submit" value="Add">'\
     '</form>'
-    assert_equal(expected, actual)
+    assert_dom_equal expected, actual
   end
 end
