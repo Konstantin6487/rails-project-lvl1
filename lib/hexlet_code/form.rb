@@ -5,7 +5,11 @@ module HexletCode
   class Form
     attr_accessor :form_data, :state
 
-    MAPPING_TAGS = { text: 'textarea', input: 'input' }.freeze
+    INPUT_TYPES = %w[
+      text button checkbox color date datetime-local
+      email file hidden image month number password
+      radio range reset search tel time url week
+    ].freeze
 
     def initialize(form_data)
       @state = []
@@ -17,19 +21,23 @@ module HexletCode
     end
 
     def input(name, **options)
-      tag_type = options.fetch(:as, :input)
-      tag_name = MAPPING_TAGS[tag_type]
-      default_tag_options = tag_name.eql?('input') ? { type: 'text' } : {}
-      tag_options = { name: name, value: form_data[name] }
-                    .merge(options)
-                    .reject { |key| key.eql?(:as) }
-      input_data = {
-        tag_name: tag_name,
-        tag_options: default_tag_options.merge(tag_options)
-      }
+      tag_options = { type: 'text', name: name, value: form_data[name] }.merge(options)
+      label('label', for: name) { name }
 
-      label('label', for: name) { tag_options[:name] }
-      add_tag input_data
+      unless options.key? :as
+        add_tag({ tag_name: 'input', tag_options: tag_options })
+        return
+      end
+
+      option_as = options[:as]
+
+      if option_as.eql? :text
+        add_tag({ tag_name: 'textarea', tag_options: tag_options.except(:as, :type) })
+        return
+      end
+
+      tag_options[:type] = INPUT_TYPES.find { |type| type.to_sym.eql? option_as }
+      add_tag({ tag_name: 'input', tag_options: tag_options.except(:as) })
     end
 
     def label(tag_name, **options, &block)
