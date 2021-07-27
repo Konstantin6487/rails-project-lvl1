@@ -21,7 +21,9 @@ module HexletCode
     end
 
     def input(name, **options)
-      tag_options = { type: 'text', name: name, value: form_data[name] }.merge(options)
+      tag_options = { type: 'text', name: name, value: form_data[name] }
+                    .merge(options)
+                    .except(:as)
       label_data = {
         tag_name: 'label',
         tag_options: { for: name },
@@ -29,12 +31,12 @@ module HexletCode
       }
 
       if options[:as].eql? :text
-        add_tag({ tag_name: 'textarea', tag_options: tag_options.except(:type, :as), tag_label: label_data })
+        add_tag({ tag_name: 'textarea', tag_options: tag_options.except(:type), tag_label: label_data })
         return
       end
 
       tag_options[:type] = INPUT_TYPES.find { |type| type.to_sym.eql?(options[:as]) || type.to_sym.eql?(:text) }
-      add_tag({ tag_name: 'input', tag_options: tag_options.except(:as), tag_label: label_data })
+      add_tag({ tag_name: 'input', tag_options: tag_options, tag_label: label_data })
     end
 
     def submit(label = 'Save')
