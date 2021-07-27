@@ -50,6 +50,22 @@ class HexletCodeTest < Minitest::Test
     assert_dom_equal expected, actual
   end
 
+  def test_tags_with_textarea_attrs
+    user = Struct.new(:name, :job, :email, keyword_init: true)
+    init_user = user.new name: 'rob', job: 'hexlet', email: 'ya@ya.ru'
+    actual = HexletCode.form_for init_user, url: '/me' do |f|
+      f.input :email, as: :email
+      f.input :job, as: :text, rows: 50, cols: 50
+    end
+    expected = '<form action="/me" method="post">'\
+               '<label for="email">Email</label>'\
+               '<input type="email" name="email" value="ya@ya.ru">'\
+               '<label for="job">Job</label>'\
+               '<textarea name="job" value="hexlet" rows="50" cols="50"></textarea>'\
+               '</form>'
+    assert_dom_equal expected, actual
+  end
+
   def test_tags_with_submit
     user = Struct.new(:name, :job, keyword_init: true)
     init_user = user.new name: 'rob', job: 'hexlet'
