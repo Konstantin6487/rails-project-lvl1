@@ -3,7 +3,7 @@
 module HexletCode
   # Form state render
   class FormRenderer
-    attr_reader :options
+    attr_reader :options, :tag_render
 
     def initialize(options)
       default_options = {
@@ -12,19 +12,23 @@ module HexletCode
       }
       collected_options = default_options.merge options.except(:url)
       @options = collected_options
+      @tag_render = Tag.new
     end
 
-    def render_tag(tag_data)
+    def render_field(tag_data)
       return '' if tag_data.empty?
 
-      field = FieldRenderer.new
-      field.render tag_data
+      field_label = tag_render.render(tag_data[:tag_label] || {})
+      field = tag_render.render tag_data
+      "#{field_label}#{field}"
     end
 
     def render(state)
-      stringified_options = options.reduce('') { |acc, (key, val)| acc + " #{key}=\"#{val}\"" }
-      stringified_children = state.empty? ? '' : state.map(&method(:render_tag)).join
-      "<form#{stringified_options}>#{stringified_children}</form>"
+      form_body = state.empty? ? '' : state.map(&method(:render_field)).join
+      form_data = { tag_name: 'form', tag_options: options, tag_body: form_body }
+      tag_render.render form_data
     end
+
+    private :render_field
   end
 end
